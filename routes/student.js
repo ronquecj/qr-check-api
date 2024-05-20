@@ -1,0 +1,21 @@
+import express from 'express';
+import { getUser } from '../controllers/user.js';
+import { verifyToken } from '../middleware/auth.js';
+import {
+  getStudents,
+  newStudent,
+  setStudentStatus,
+} from '../controllers/student.js';
+
+const router = express.Router();
+
+router.get('/', getStudents);
+router.post('/new', newStudent);
+router.post('/status/:id', setStudentStatus);
+
+// READ
+router.get('/:id', getUser);
+
+// UPDATE
+
+export default router;
