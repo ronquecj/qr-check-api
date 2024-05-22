@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.get('/', getStudents);
+router.get('/:id', getStudents);
 router.post('/new', newStudent);
 router.post('/status/:id', setStudentStatus);
 

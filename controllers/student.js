@@ -43,12 +43,12 @@ export const setStudentStatus = async (req, res) => {
 // GET REQUEST
 export const getStudents = async (req, res) => {
   try {
-    const { classID } = req.body;
+    const { id } = req.params;
     const ObjectId = mongoose.Types.ObjectId;
-    const classData = await Class.findById(classID);
+    const classData = await Class.findById(id);
 
     const students = await Student.find({
-      'classData._id': new ObjectId(classData._id),
+      'classData._id': new ObjectId(id),
     }).exec();
     res.status(200).json(students);
   } catch (err) {
