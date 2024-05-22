@@ -53,7 +53,7 @@ export const getClassById = async (req, res) => {
     const { id } = req.params;
     const ObjectId = mongoose.Types.ObjectId;
     const cl = await Class.find({
-      'studentData._id': new ObjectId(id),
+      'userData._id': new ObjectId(id),
     }).exec();
 
     res.status(200).json({ count: cl.length, cl });
