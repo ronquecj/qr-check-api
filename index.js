@@ -22,6 +22,11 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // USER ROUTES
 app.use('/api/auth', authRoutes);
 app.use('/api/student', studentRoutes);
