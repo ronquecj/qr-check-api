@@ -1,4 +1,5 @@
 import Class from '../models/Class.js';
+import Student from '../models/Student.js';
 import User from '../models/User.js';
 import mongoose from 'mongoose';
 
@@ -67,12 +68,33 @@ export const deleteClassByID = async (req, res) => {
   try {
     const { id } = req.params;
     const ObjectId = mongoose.Types.ObjectId;
+
     const cl = await Class.deleteOne({
       _id: new ObjectId(id),
     }).exec();
 
-    res.status(200).json({ count: cl.length, cl });
+    if (cl.deletedCount === 0) {
+      return res.status(404).json({ error: 'Class not found' });
+    }
+
+    const deletedStudents = await Student.deleteMany({
+      'classData._id': new ObjectId(id),
+    }).exec();
+
+    if (deletedStudents.deletedCount === 0) {
+      console.log(`No students found with classData.id ${id}`);
+      return res.status(404).json({
+        error: 'No students found with the provided class ID',
+      });
+    }
+
+    res.status(200).json({
+      message: 'Class and associated students deleted successfully',
+      deletedClass: cl,
+      deletedStudents: deletedStudents,
+    });
   } catch (err) {
+    console.error(`Error: ${err.message}`);
     res.status(500).json({ error: err.message });
   }
 };
