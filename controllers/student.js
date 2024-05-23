@@ -25,9 +25,8 @@ export const newStudent = async (req, res) => {
 
 export const setStudentStatus = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
-    const filter = { _id: id };
+    const { status, studentName } = req.body;
+    const filter = { studentName };
     const update = { status };
 
     const approve = await Student.findOneAndUpdate(filter, update, {

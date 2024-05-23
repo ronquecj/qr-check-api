@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/:id', getStudents);
 router.post('/new', newStudent);
-router.post('/status/:id', setStudentStatus);
+router.post('/status', setStudentStatus);
 
 // READ
 router.get('/:id', getUser);
