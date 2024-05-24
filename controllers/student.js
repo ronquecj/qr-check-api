@@ -39,6 +39,22 @@ export const setStudentStatus = async (req, res) => {
   }
 };
 
+export const editStudentName = async (req, res) => {
+  try {
+    const { editedName, studentName } = req.body;
+    const filter = { studentName };
+    const update = { studentName: editedName };
+
+    const approve = await Student.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+
+    res.status(200).json(approve);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // GET REQUEST
 export const getStudents = async (req, res) => {
   try {
@@ -71,11 +87,11 @@ export const getClassById = async (req, res) => {
 };
 
 // DELETE REQUEST BY ID
-export const deleteClassByID = async (req, res) => {
+export const deleteStudentByID = async (req, res) => {
   try {
     const { id } = req.params;
     const ObjectId = mongoose.Types.ObjectId;
-    const cl = await Class.deleteOne({
+    const cl = await Student.deleteOne({
       _id: new ObjectId(id),
     }).exec();
 
